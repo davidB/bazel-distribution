@@ -49,12 +49,14 @@ load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories")
 node_repositories()
 
 # Load Python
-git_repository(
-    name = "io_bazel_rules_python",
-    remote = "https://github.com/bazelbuild/rules_python.git",
-    commit = "fdbb17a4118a1728d19e638a5291b4c4266ea5b8",
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "rules_python",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.0.2/rules_python-0.0.2.tar.gz",
+    strip_prefix = "rules_python-0.0.2",
+    sha256 = "b5668cde8bb6e3515057ef465a35ad712214962f0b3a314e551204266c7be90c",
 )
-load("@io_bazel_rules_python//python:pip.bzl", "pip_repositories", "pip_import")
+load("@rules_python//python:pip.bzl", "pip_repositories", "pip_import")
 pip_repositories()
 pip_import(
     name = "graknlabs_bazel_distribution_pip",
